@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Physics Module 2 Quiz</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f5f7fb;--card:#fff;--tx:#14213d;--mu:#5c6b8a;--ac:#1f4e8c;--or:#f28c1b;--ok:#1e8e4e;--okb:#e3f5ea;--no:#c0392b;--nob:#fbe7e4;--bd:#d9dfec}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1524;--card:#182036;--tx:#eef2fb;--mu:#9aa8c7;--ac:#6fa3ea;--ok:#5fd394;--okb:#12321f;--no:#ff8b7d;--nob:#3a1a17;--bd:#2c3855}}
+:root[data-theme="dark"]{--bg:#0f1524;--card:#182036;--tx:#eef2fb;--mu:#9aa8c7;--ac:#6fa3ea;--ok:#5fd394;--okb:#12321f;--no:#ff8b7d;--nob:#3a1a17;--bd:#2c3855}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+.wrap{max-width:680px;margin:0 auto;padding:20px 16px 40px}
+.brand{display:flex;align-items:center;gap:8px;color:var(--mu);font-size:14px;margin-bottom:16px}
+.dot{width:12px;height:12px;border-radius:3px;background:var(--or)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:22px}
+h1{margin:0 0 8px;font-size:26px}h2{margin:0 0 16px;font-size:20px;line-height:1.35}
+p{color:var(--mu);margin:0 0 18px}
+button{font:inherit;cursor:pointer}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:600}
+.btn:disabled{opacity:.4;cursor:default}
+.opt{display:block;width:100%;text-align:left;background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.opt:hover:not(:disabled){border-color:var(--ac)}
+.opt.ok{border-color:var(--ok);background:var(--okb)}.opt.no{border-color:var(--no);background:var(--nob)}
+.bar{height:8px;background:var(--bd);border-radius:8px;overflow:hidden;margin-bottom:8px}
+.bar i{display:block;height:100%;background:var(--or);transition:width .3s}
+.meta{display:flex;justify-content:space-between;color:var(--mu);font-size:14px;margin-bottom:14px}
+.score{font-size:52px;font-weight:700;color:var(--ac);margin:4px 0}
+.rev{border-top:1px solid var(--bd);padding:14px 0}.rev b{display:block;margin-bottom:4px}
+.g{color:var(--ok)}.r{color:var(--no)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.btn.alt{background:transparent;color:var(--ac);border:2px solid var(--ac)}
+</style></head><body><div class="wrap">
+<div class="brand"><span class="dot"></span>EASA Part-66 · Module 2 Physics · Practice Quiz</div>
+<div id="app"></div></div>
+<script>
+// Question bank: [question, correct answer, wrong1, wrong2, wrong3]  (correct is always first here; options are shuffled at runtime)
+const BANK=[
+["Into which particles can the atom be subdivided (for this course)?","Protons, neutrons and electrons","Molecules, ions and compounds","Protons and ions only","Electrons and molecules"],
+["What is a molecule?","Two or more atoms joined chemically","A single charged atom","A nucleus without electrons","A mixture of atoms not joined together"],
+["What is the driving force that makes atoms combine?","Energy (reaching the lowest energy state)","Gravity","Temperature alone","Magnetism"],
+["What is the electrical charge of a neutron?","Neutral (no charge)","Positive","Negative","Alternating"],
+["What is formed when an atom gains or loses electrons?","An ion","A neutron","A molecule","An isotope"],
+["What is the valence of magnesium (Mg, 1s² 2s² 2p⁶ 3s²)?","2","1","3","4"],
+["Atoms with a valence of zero are known as:","Inert (noble) elements","Transition elements","Metals","Ionic compounds"],
+["What do the rows of the periodic table correspond to?","The principal energy shells","The number of neutrons","The atomic mass","The type of bond"],
+["Why do copper, silver and gold have similar properties?","They sit in the same column of the periodic table","They are all gases","They have no electrons","They are all ionic compounds"],
+["In an ionic bond (e.g. sodium chloride), electrons are:","Transferred from one atom to another","Shared between atoms","Shared by a sea of electrons","Removed from the nucleus"],
+["In a covalent bond, electrons are:","Shared between two or more atoms","Completely removed from atoms","Free in a sea around positive ions","Transferred to a nucleus"],
+["Which bond forms a 'sea of electrons' and makes metals good conductors?","Metallic bond","Ionic bond","Covalent bond","Van der Waals bond"],
+["Van der Waals bonds are:","Weak secondary bonds from electrostatic attraction","Strong primary bonds","Bonds found only in metals","Bonds that transfer electrons"],
+["The ductility of PVC is attributed to:","Weak van der Waals bonds between chain molecules","Strong metallic bonds","Ionic bonds","A sea of free electrons"],
+["At the equilibrium separation r₀ in a solid, the resultant interatomic force is:","Zero","Maximum attraction","Maximum repulsion","Infinite"],
+["Which state of matter has no particular shape or volume?","Gas","Solid","Liquid","Crystal"],
+["Sublimation is the change from:","Solid directly to gas","Liquid to gas","Gas to liquid","Gas directly to solid"],
+["Deposition is the change from:","Gas directly to solid","Solid directly to gas","Liquid to solid","Solid to liquid"],
+["Condensation is the change from:","Gas to liquid","Liquid to gas","Liquid to solid","Solid to liquid"],
+["Which law states that two vectors can be replaced by the diagonal of the parallelogram they form?","Parallelogram law","Hooke's law","Archimedes' principle","Principle of moments"],
+["The equilibrant of a system of forces is:","Equal in magnitude to the resultant but opposite in sense","Equal to the resultant and in the same direction","Always zero","Twice the resultant"],
+["The horizontal component of a force F at angle θ to the horizontal is:","F cos θ","F sin θ","F tan θ","F / cos θ"],
+["The moment of a force about a pivot is:","Force × perpendicular distance","Force ÷ distance","Force + distance","Force × time"],
+["Which is the SI unit of a moment?","Nm","N/m²","N/m","Pa"],
+["For static equilibrium, the total clockwise moments must:","Equal the total anticlockwise moments","Be greater than the anticlockwise moments","Be zero while anticlockwise ones are not","Be double the anticlockwise moments"],
+["The position of an aircraft's CG from a datum is found using:","x = Σ(m·x) ÷ total mass","x = total mass ÷ Σ(m·x)","x = Σm + Σx","x = m × g"],
+["Stress is defined as:","Force per unit area","Force × area","Change in length ÷ original length","Area per unit force"],
+["Direct strain is defined as:","Change in dimension ÷ original dimension","Force ÷ area","Original length × deformation","Stress × modulus"],
+["Hooke's law states that within the elastic limit, the change in shape is:","Directly proportional to the applied force","Inversely proportional to the force","Independent of the force","Proportional to the square of the force"],
+["The modulus of elasticity (E) is:","Stress ÷ strain","Strain ÷ stress","Force × area","Shear stress × length"],
+["Structural components designed to carry tensile loads are called:","Ties","Struts","Beams","Couples"],
+["Shear stress results from forces that:","Tend to make one part of the material slide over another","Pull the material apart","Crush the material","Change only its volume"],
+["Bulk modulus relates to deformation that is:","A change in volume without a change in shape","A change in shape without a change in volume","A sliding of layers","A twisting motion"],
+["Hydrostatic pressure due to the weight of a liquid is:","ρ·g·h","ρ·A·h","m·g·A","ρ ÷ (g·h)"],
+["Absolute pressure equals:","Gauge pressure + atmospheric pressure","Gauge pressure − atmospheric pressure","Atmospheric pressure ÷ gauge pressure","Gauge pressure only"],
+["Atmospheric pressure at sea level is approximately:","14.7 lbf/in²","1.47 lbf/in²","147 lbf/in²","150 bar"],
+["Archimedes' principle: an immersed body experiences an upthrust equal to:","The weight of the fluid it displaces","Its own weight always","The volume of the container","The pressure of the atmosphere"],
+["In a hydraulic (Bramah) press, the velocity ratio VR equals:","A₂ / A₁ (load piston area ÷ effort piston area)","A₁ / A₂","A₁ × A₂","A₁ − A₂"],
+["At a given depth in a fluid, pressure is:","Equal in all directions","Greatest downward only","Dependent on vessel shape","Zero at the walls"],
+["Moving from solid to liquid to gas, compressibility:","Increases","Decreases","Stays the same","Becomes zero"]
+];
+const $=id=>document.getElementById(id),app=$("app");
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let qs,i,score,log;
+function start(){app.innerHTML=`<div class="card"><h1>Physics Practice Quiz</h1><p>Module 2 · Matter &amp; Statics<br>10 random multiple-choice questions from a bank of ${BANK.length}. Each attempt is different.</p><button class="btn" id="go">Start quiz</button></div>`;$("go").onclick=begin}
+function begin(){qs=shuf(BANK).slice(0,10).map(q=>({q:q[0],c:q[1],o:shuf(q.slice(1))}));i=0;score=0;log=[];show()}
+function show(){const q=qs[i];app.innerHTML=`<div class="meta"><span>Question ${i+1} of 10</span><span>Score: ${score}</span></div><div class="bar"><i style="width:${i*10}%"></i></div><div class="card"><h2>${q.q}</h2><div id="opts"></div><div class="row"><button class="btn" id="nx" disabled>${i==9?"See results":"Next"}</button></div></div>`;
+q.o.forEach(t=>{const b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=()=>pick(b,t);$("opts").appendChild(b)});
+$("nx").onclick=()=>{i++;i<10?show():end()}}
+function pick(b,t){const q=qs[i],ok=t===q.c;if(ok)score++;log.push({q:q.q,a:t,c:q.c,ok});
+document.querySelectorAll(".opt").forEach(x=>{x.disabled=true;if(x.textContent===q.c)x.classList.add("ok")});if(!ok)b.classList.add("no");$("nx").disabled=false}
+function end(){const m=score>=8?"Excellent work!":score>=5?"Good effort — review the misses below.":"Keep studying and try again.";
+app.innerHTML=`<div class="card"><h1>Your result</h1><div class="score">${score} / 10</div><p>${m}</p><div class="row"><button class="btn" id="re">Try new questions</button><button class="btn alt" id="hm">Home</button></div>
+<h2 style="margin-top:26px">Review</h2>${log.map((l,k)=>`<div class="rev"><b>${k+1}. ${l.q}</b>${l.ok?`<span class="g">✓ ${l.a}</span>`:`<span class="r">✗ Your answer: ${l.a}</span><br><span class="g">✓ Correct: ${l.c}</span>`}</div>`).join("")}</div>`;
+$("re").onclick=begin;$("hm").onclick=start;window.scrollTo(0,0)}
+start();
+</script></body></html>
